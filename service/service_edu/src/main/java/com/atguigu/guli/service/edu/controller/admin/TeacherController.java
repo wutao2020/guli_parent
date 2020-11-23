@@ -35,8 +35,6 @@ import java.util.Map;
 public class TeacherController {
     @Autowired
     private TeacherService teacherService;
-    @Autowired
-    private OssFileService ossFileService;
 
     /**
      * 获取全部老师

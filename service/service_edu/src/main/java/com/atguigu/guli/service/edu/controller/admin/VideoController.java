@@ -3,6 +3,7 @@ package com.atguigu.guli.service.edu.controller.admin;
 
 import com.atguigu.guli.common.base.result.R;
 import com.atguigu.guli.service.edu.entity.Video;
+import com.atguigu.guli.service.edu.feign.MediaService;
 import com.atguigu.guli.service.edu.service.VideoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,6 +11,9 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.websocket.server.PathParam;
+import java.awt.image.VolatileImage;
 
 /**
  * <p>
@@ -27,6 +31,8 @@ import org.springframework.web.bind.annotation.*;
 public class VideoController {
     @Autowired
     private VideoService videoService;
+    @Autowired
+    private MediaService mediaService;
     @ApiOperation("新增课时")
     @PostMapping("save")
     public R save(
@@ -64,8 +70,7 @@ public class VideoController {
     @ApiOperation("根据ID删除课时")
     @DeleteMapping("remove/{id}")
     public R removeById(@ApiParam(value = "课时ID", required = true) @PathVariable String id){
-        //TODO 删除视频：VOD
-        //在此处调用vod中的删除视频文件的接口
+        videoService.removeVideo(id);
 
         boolean result = videoService.removeById(id);
         if (result) {
@@ -74,6 +79,19 @@ public class VideoController {
             return R.error().message("数据不存在");
         }
     }
-
+    @ApiOperation("根据id删除阿里云视频")
+    @DeleteMapping("removeVideo")
+    public R removeVideo(
+            @ApiParam(value="课时id", required = false)
+            @RequestBody Video videoSource){
+        String id = videoSource.getId();
+        String videoSourceId = videoSource.getVideoSourceId();
+        boolean isRemove=videoService.removeAndUpdateVideo(id,videoSourceId);
+        if (isRemove){
+            return R.ok().message("删除成功");
+        }else {
+            return R.error().message("删除失败");
+        }
+    }
 }
 
