@@ -1,13 +1,14 @@
 package com.atguigu.guli.service.edu.service;
 
+import com.atguigu.guli.service.base.dto.CourseDto;
 import com.atguigu.guli.service.edu.entity.Course;
 import com.atguigu.guli.service.edu.entity.Teacher;
 import com.atguigu.guli.service.edu.entity.form.CourseInfoForm;
-import com.atguigu.guli.service.edu.entity.vo.CoursePublishVo;
-import com.atguigu.guli.service.edu.entity.vo.CourseQueryVo;
-import com.atguigu.guli.service.edu.entity.vo.CourseVo;
+import com.atguigu.guli.service.edu.entity.vo.*;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -34,4 +35,16 @@ public interface CourseService extends IService<Course> {
     CoursePublishVo getCoursePublishVoById(String id);
 
     boolean publishCourseById(String id);
+
+    List<Course> webSelectList(WebCourseQueryVo webCourseQueryVo);
+    /**
+     * 获取课程信息并更新浏览量
+     * @param id
+     * @return
+     */
+    WebCourseVo selectWebCourseVoById(String id);
+
+    List<Course> selectHotCourse();
+
+    CourseDto getCourseDtoById(String courseId);
 }
