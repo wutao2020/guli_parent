@@ -27,7 +27,6 @@ spring:
 aliyun:
   sms:
     regionId: cn-hangzhou
-    keyId: LTAI4Fpb7bZepit9DSAAhc3V
-    keySecret: h3rDvtprh5dDu3qZ2o0kLOGkNCzHtY
+    
     templateCode: SMS_96695065
     signName: 谷粒
